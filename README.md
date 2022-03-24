@@ -1,1 +1,1 @@
-# arithmetic
+# 刷算法题
