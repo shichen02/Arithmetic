@@ -18,11 +18,11 @@ public class FirstDay {
      */
     public List<Integer> preorderTraversal(TreeNode root) {
         List<Integer> result = new ArrayList<Integer>();
-        return  preorderTraversal(root,result);
+        return preorderTraversal(root, result);
     }
 
-    public List<Integer> preorderTraversal(TreeNode root ,List<Integer> list) {
-        if (root == null){
+    public List<Integer> preorderTraversal(TreeNode root, List<Integer> list) {
+        if (root == null) {
             return list;
         }
         list.add(root.val);
@@ -30,6 +30,55 @@ public class FirstDay {
         preorderTraversal(root.right, list);
 
         return list;
+    }
+
+    /**
+     * 543 二叉树的直径
+     *
+     * @param root
+     * @return
+     */
+    public int diameterOfBinaryTree(TreeNode root) {
+        if (root == null) {
+            return getMaxValue(root);
+        }
+        int maxValue = getMaxValue(root);
+        int leftValue = diameterOfBinaryTree(root.left);
+        maxValue = Math.max(maxValue, leftValue);
+        int rightValue = diameterOfBinaryTree(root.right);
+
+        return Math.max(maxValue, rightValue);
+    }
+
+    public int getMaxValue(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+        int max = 0;
+        int i = diameterOfBinaryTreeLeft(root, max);
+        max = Math.max(i, max);
+
+        int j = diameterOfBinaryTreeLeft(root, max);
+        max = Math.max(j, max);
+
+        return max;
+    }
+
+
+    public int diameterOfBinaryTreeRight(TreeNode root, int value) {
+        if (root.left == null) {
+            return value;
+        }
+        value++;
+        return diameterOfBinaryTreeRight(root.left, value);
+    }
+
+    public int diameterOfBinaryTreeLeft(TreeNode root, int value) {
+        if (root.left == null) {
+            return value;
+        }
+        value++;
+        return diameterOfBinaryTreeLeft(root.right, value);
     }
 
     class TreeNode {
@@ -50,6 +99,7 @@ public class FirstDay {
             this.right = right;
         }
     }
+
 
     public static void main(String[] args) {
 
